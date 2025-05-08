@@ -1,2 +1,2 @@
-app01.js - Max and Min Sum
-app02.js - minSubLength
+app01.js - 
+app02.js - 

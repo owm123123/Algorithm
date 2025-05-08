@@ -26,3 +26,5 @@ list1 = {
 // 所以只能 重頭 開始搜索
 // list.val 當前值
 // list.next 下一個node
+
+// 不能修改 val

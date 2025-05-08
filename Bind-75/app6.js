@@ -11,6 +11,8 @@
 // Input: head = [1,2], n = 1
 // Output: [1]
 
+// ----------------------------------------------------------
+
 /**
  * Definition for singly-linked list.
  * function ListNode(val, next) {
