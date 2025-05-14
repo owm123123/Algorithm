@@ -17,19 +17,21 @@
 // 卡在 hashTable 定義 key-value 的部分
 // 應該將 key = 值, value = index
 
-// hashTable
-function hashTable(nums, target) {
-  let map = {};
+/**
+ * @param {number[]} nums
+ * @param {number} target
+ * @return {number[]}
+ */
+var twoSum = function (nums, target) {
+  let map = new Map();
 
   for (let i = 0; i < nums.length; i++) {
     let complement = target - nums[i];
 
-    if (complement in map) {
-      return [map[complement], i];
+    if (map.has(complement)) {
+      return [map.get(complement), i];
     }
 
-    map[nums[i]] = i;
+    map.set(nums[i], i);
   }
-
-  return [];
-}
+};
