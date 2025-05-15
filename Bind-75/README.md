@@ -19,6 +19,7 @@ app18.js - Insert Interval
 app19.js - Unique Paths
 app20.js - Climbing Stairs
 app21.js - Set Matrix Zeroes
-
+app22.js - 
 app23.js - Word Search
+app24.js - Decode Ways
 
