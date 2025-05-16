@@ -23,6 +23,18 @@
 // ----------------------------------------------------------
 
 /**
+ *
+ * 序列型 dp
+ *
+ * 1. 設定dp[]範圍: target + 1
+ * 3. 初始化 dp[]
+ * 2. 找出 dp 公式
+ *
+ */
+
+// ----------------------------------------------------------
+
+/**
  * @param {number[]} nums
  * @param {number} target
  * @return {number}
@@ -35,7 +47,7 @@ var combinationSum4 = function (nums, target) {
 
   for (let i = 1; i <= target; i++) {
     for (let num of nums) {
-      if ((i) => num) {
+      if (i >= num) {
         dp[i] += dp[i - num];
       }
     }
