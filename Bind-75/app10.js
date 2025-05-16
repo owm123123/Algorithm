@@ -54,6 +54,16 @@
 // ----------------------------------------------------------
 
 /**
+ *
+ * 1. silding windows: l = 0, r = length - 1
+ * 2. 定義 mid (Math.floor((r + l) / 2))
+ * 3. 找到 有序 (arr[l] ≤ arr[mid])
+ * 4. 判斷 mid & target => 移動 mid
+ *
+ */
+
+// ----------------------------------------------------------
+/**
  * @param {number[]} nums
  * @param {number} target
  * @return {number}
