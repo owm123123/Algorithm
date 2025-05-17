@@ -18,16 +18,16 @@
  * @return {number}
  */
 var maxSubArray = function (nums) {
-  let sum = 0,
-    maxSum = Math.max();
+  let temp = 0;
+  let max = nums[0];
+
   for (let i = 0; i < nums.length; i++) {
-    sum += nums[i];
-    if (maxSum < sum) {
-      maxSum = sum;
+    if (temp < 0) {
+      temp = 0;
     }
-    if (sum < 0) {
-      sum = 0;
-    }
+    temp = temp + nums[i];
+    max = Math.max(temp, max);
   }
-  return maxSum;
+
+  return max;
 };
