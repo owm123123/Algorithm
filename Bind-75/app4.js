@@ -22,3 +22,36 @@
 // Input: nums = [0,0,0]
 // Output: [[0,0,0]]
 // Explanation: The only possible triplet sums up to 0.
+
+/**
+ * @param {number[]} nums
+ * @return {number[][]}
+ */
+var threeSum = function (nums) {
+  nums.sort((a, b) => a - b);
+  let res = [];
+
+  for (let i = 0; i < nums.length; i++) {
+    if (i > 0 && nums[i] === nums[i - 1]) continue;
+
+    let fix = nums[i];
+    let l = i + 1;
+    let r = nums.length - 1;
+
+    while (l < r) {
+      let temp = nums[r] + nums[l] + fix;
+      if (temp === 0) {
+        res.push([fix, nums[l], nums[r]]);
+        while (l < r && nums[l] === nums[l + 1]) l++;
+        while (l < r && nums[r] === nums[r - 1]) r--;
+        r++;
+        l--;
+      } else if (temp > 0) {
+        r--;
+      } else {
+        l++;
+      }
+    }
+  }
+  return res;
+};
