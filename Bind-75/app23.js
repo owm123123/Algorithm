@@ -29,15 +29,13 @@ var exist = function (board, word) {
   const backtrack = (i, j, index) => {
     if (index === word.length) return true;
 
-    // 檢查邊界條件和當前字母是否匹配
-    // 這裡達到 剪枝 的效果
-    if (
-      i < 0 ||
-      i >= rows ||
-      j < 0 ||
-      j >= cols ||
-      board[i][j] !== word[index]
-    ) {
+    // 檢查邊界
+    if (i < 0 || i >= rows || j < 0 || j >= cols) {
+      return false;
+    }
+
+    // 剪枝
+    if (board[i][j] !== word[index]) {
       return false;
     }
 
@@ -51,12 +49,14 @@ var exist = function (board, word) {
       backtrack(i, j + 1, index + 1) ||
       backtrack(i, j - 1, index + 1);
 
-    // 回溯
+    // 回溯 (讓其他路徑可以正確地使用該節點)
     board[i][j] = temp;
 
     return found;
   };
 
+  // 起點不一定是 board[0][0]
+  // 所以需要 double for-each
   for (let i = 0; i < rows; i++) {
     for (let j = 0; j < cols; j++) {
       if (backtrack(i, j, 0)) {

@@ -22,4 +22,6 @@ app21.js - Set Matrix Zeroes
 app22.js - 
 app23.js - Word Search
 app24.js - Decode Ways
+app25.js - Validate Binary Search Tree
+app26.js - Same Tree
 
