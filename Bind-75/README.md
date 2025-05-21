@@ -24,4 +24,6 @@ app23.js - Word Search
 app24.js - Decode Ways
 app25.js - Validate Binary Search Tree
 app26.js - Same Tree
+app27.js - Binary Tree Level Order Traversal
+app28.js - Maximum Depth of Binary Tree
 
