@@ -14,7 +14,7 @@ app13.js - Group Anagrams
 app14.js - Maximum Subarray
 app15.js - Spiral Matrix
 app16.js - Jump Game
-app17.js - 
+app17.js - Merge Intervals
 app18.js - Insert Interval
 app19.js - Unique Paths
 app20.js - Climbing Stairs
@@ -26,4 +26,9 @@ app25.js - Validate Binary Search Tree
 app26.js - Same Tree
 app27.js - Binary Tree Level Order Traversal
 app28.js - Maximum Depth of Binary Tree
+app29.js - Construct Binary Tree from Preorder and Inorder Traversal
+app30.js - Best Time to Buy and Sell Stock
+app31.js - 
+app32.js - Valid Palindrome
+
 
