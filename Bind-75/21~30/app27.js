@@ -15,6 +15,23 @@
  * BFS + queue 機制
  * queue.shift() 會得到一個 node
  *
+ * init: queue[root];
+ *
+ * while(queue.length > 0)
+ *  size: 紀錄這層會有幾個 node
+ *  level: 這層的 node []
+ *  for node in size
+ *    queue.shift // 拿出第一個
+ *    level.push  // push node
+ *
+ *    記錄下一層有哪些 node
+ *    node.left add queue
+ *    node.right add queue
+ *
+ *  result push level
+ *
+ * return result
+ *
  */
 
 //-------------------------
