@@ -24,9 +24,17 @@
  */
 var maxDepth = function (root) {
   if (!root) return 0;
+  let deep = -Infinity;
+  const dfs = (node, index) => {
+    deep = Math.max(deep, index);
+    if (node.left) {
+      dfs(node.left, index + 1);
+    }
+    if (node.right) {
+      dfs(node.right, index + 1);
+    }
+  };
 
-  const leftDepth = maxDepth(root.left);
-  const rightDepth = maxDepth(root.right);
-
-  return Math.max(leftDepth, rightDepth) + 1;
+  dfs(root, 1);
+  return deep;
 };
