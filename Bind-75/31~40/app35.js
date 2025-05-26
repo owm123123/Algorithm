@@ -1,7 +1,23 @@
-//* Word Break
+// * Word Break
 // Given a string s and a dictionary of strings wordDict, return true if s can be segmented into a space-separated sequence of one or more dictionary words.
 // Note that the same word in the dictionary may be reused multiple times in the segmentation.
-
+//-------------------------
+/**
+ * 關鍵: 以 true 來表示切割的位置起點
+ * 準備:
+ *  initial: dp[0] = true
+ *  wordDir: set
+ *  dp: new Array(s.length + 1).fill(false);
+ *  dp[0] = ture
+ *
+ * * 核心:
+ * * for (let i = 1; i < s.length + 1; i++) {
+ * *   for (let j = Math.max(0, i - maxLen); j < i; j++) {
+ * *      if (dp[j] && set.has(s.slice(j, i))) { dp[i] = true; break; }
+ *
+ * ! 不可只使用 start 計算 => 屬於 Greedy 無法回溯!
+ */
+//-------------------------
 // Input: s = "leetcode", wordDict = ["leet","code"]
 // Output: true
 // Explanation: Return true because "leetcode" can be segmented as "leet code".
@@ -13,23 +29,6 @@
 
 // Input: s = "catsandog", wordDict = ["cats","dog","sand","and","cat"]
 // Output: false
-//-------------------------
-
-/**
- * 關鍵: 以 true 來表示切割的位置起點
- * 準備:
- *  initial: dp[0] = true
- *  wordDir: set
- *  dp: new Array(s.length + 1).fill(false);
- * * 核心:
- * * for i in s.length
- * *   for word in wordDir
- * *     if(dp[i] && word === s.substring(i, i + word.length))
- * *       dp[i + word.length] = true
- *
- * ! 不可只使用 start 計算 => 屬於 Greedy 無法回溯!
- */
-//-------------------------
 
 /**
  * @param {string} s
@@ -45,7 +44,8 @@ var wordBreak = function (s, wordDict) {
   const maxLen = wordDict.reduce((max, str) => Math.max(max, str.length), 0);
   dp[0] = true;
 
-  for (let i = 1; i <= s.length; i++) {
+  // ! 統一上面 s.length + 1 比較不會忘記
+  for (let i = 1; i < s.length + 1; i++) {
     for (let j = Math.max(0, i - maxLen); j < i; j++) {
       if (dp[j] && set.has(s.slice(j, i))) {
         dp[i] = true;
