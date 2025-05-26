@@ -1,4 +1,4 @@
-// Reorder List
+//* Reorder List
 
 // You are given the head of a singly linked-list. The list can be represented as:
 // L0 → L1 → … → Ln - 1 → Ln
@@ -60,7 +60,7 @@ var reorderList = function (head) {
     let temp2 = second.next;
 
     first.next = second;
-    second.next = first.next;
+    second.next = temp1;
 
     first = temp1;
     second = temp2;
