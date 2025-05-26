@@ -1,4 +1,4 @@
-// Word Break
+//* Word Break
 // Given a string s and a dictionary of strings wordDict, return true if s can be segmented into a space-separated sequence of one or more dictionary words.
 // Note that the same word in the dictionary may be reused multiple times in the segmentation.
 
@@ -21,15 +21,14 @@
  *  initial: dp[0] = true
  *  wordDir: set
  *  dp: new Array(s.length + 1).fill(false);
- * 核心:
- *  for i in s.length
- *    for word in wordDir
- *      if(dp[i] && word === s.substring(i, i + word.length))
- *        dp[i + word.length] = true
+ * * 核心:
+ * * for i in s.length
+ * *   for word in wordDir
+ * *     if(dp[i] && word === s.substring(i, i + word.length))
+ * *       dp[i + word.length] = true
  *
- *  return dp[s.length]
+ * ! 不可只使用 start 計算 => 屬於 Greedy 無法回溯!
  */
-
 //-------------------------
 
 /**
@@ -38,36 +37,23 @@
  * @return {boolean}
  */
 var wordBreak = function (s, wordDict) {
+  // ! 因為這裡設定的下一個起始點是在 匹配字 的下一個，所以 +1
   let dp = new Array(s.length + 1).fill(false);
-  dp[0] = true;
-  for (let i = 0; i < s.length; i++) {
-    for (let word of wordDict) {
-      if (dp[i] && s.substring(i, i + word.length) == word) {
-        dp[i + word.length] = true;
-      }
-    }
-  }
-  return dp[s.length];
-};
+  let set = new Set(wordDict);
 
-//-------------------------
-// Best 100%
-var wordBreak = function (s, wordDict) {
-  const wordSet = new Set(wordDict);
-  const dp = Array(s.length + 1).fill(false);
+  // ! 減少s很大，但wordDict很少，導致無法配對，卻還在for-each的情況
+  const maxLen = wordDict.reduce((max, str) => Math.max(max, str.length), 0);
   dp[0] = true;
-
-  const maxWordLen = Math.max(...wordDict.map((word) => word.length)); // 字典中單詞的最大長度
 
   for (let i = 1; i <= s.length; i++) {
-    for (let j = Math.max(0, i - maxWordLen); j < i; j++) {
-      // 只檢查長度不超過 maxWordLen 的子字串
-      if (dp[j] && wordSet.has(s.substring(j, i))) {
+    for (let j = Math.max(0, i - maxLen); j < i; j++) {
+      if (dp[j] && set.has(s.slice(j, i))) {
         dp[i] = true;
         break;
       }
     }
   }
 
+  // ! 回傳檢查 s[] 下一個是否為開頭
   return dp[s.length];
 };
