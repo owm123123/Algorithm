@@ -42,10 +42,12 @@ var spiralOrder = function (matrix) {
   if (!matrix || matrix.length === 0) return [];
 
   let result = [];
-  let top = 0,
-    bottom = matrix.length - 1;
-  let left = 0,
-    right = matrix[0].length - 1;
+
+  let top = 0;
+  let left = 0;
+  // ! 用 index 去記算，不要用 數量 (準確定義邊界)
+  let bottom = matrix.length - 1;
+  let right = matrix[0].length - 1;
 
   while (top <= bottom && left <= right) {
     // 左 -> 右
@@ -60,8 +62,9 @@ var spiralOrder = function (matrix) {
     }
     right--;
 
+    // ! 建議都檢查，比較不會搞混
     // 右 -> 左
-    if (top <= bottom) {
+    if (top <= bottom && left <= right) {
       for (let i = right; i >= left; i--) {
         result.push(matrix[bottom][i]);
       }
@@ -69,7 +72,7 @@ var spiralOrder = function (matrix) {
     }
 
     // 下 -> 上
-    if (left <= right) {
+    if (top <= bottom && left <= right) {
       for (let i = bottom; i >= top; i--) {
         result.push(matrix[i][left]);
       }
