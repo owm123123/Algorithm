@@ -49,14 +49,15 @@ WordDictionary.prototype.addWord = function (word) {
  */
 WordDictionary.prototype.search = function (word) {
   const dfs = (node, i) => {
-    //* 因為最後傳入的是i+1
+    // * 因為最後傳入的是i+1
     if (word.length === i) return !!node.isEnd;
     const c = word[i];
 
     if (word[i] === '.') {
-      //* 這裡要傳入的是 key
+      // * 這裡要傳入的是 key
       for (let key in node) {
-        //! 注意: 傳入node[key]
+        // ! 注意: 傳入 node[key] = 物件
+        // ! 這裡的 key !== 'isEnd' 防止出現 isEnd 時, 不進入 for-each
         if (key !== 'isEnd' && dfs(node[key], i + 1)) return true;
       }
       return false;
