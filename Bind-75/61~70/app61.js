@@ -34,7 +34,7 @@ class Solution {
       let temp = i;
       while (str[temp] != '#') temp++;
       let len = parseInt(str.slice(i, temp));
-      result.push(temp + 1, temp + 1 + len);
+      result.push(str.slice(temp + 1, temp + 1 + len));
       i = temp + 1 + len;
     }
 
