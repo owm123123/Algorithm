@@ -17,16 +17,22 @@
 // 3 --> 11
 // 4 --> 100
 // 5 --> 101
+/**
+ * ! 以5為範例，要拆成10, 1
+ * ! 10 = dp[2] = dp[5 >> 1] + (5 & 1)
+ * ! 所以公式: dp[i] = dp[i >> 1] + (i & 1)
+ */
 
 /**
  * @param {number} n
  * @return {number[]}
  */
 var countBits = function (n) {
-  let ans = [0];
+  let dp = [];
+  dp[0] = 0;
 
   for (let i = 1; i <= n; i++) {
-    ans[i] = ans[i >> 1] + (i & 1);
+    dp[i] = dp[i >> 1] + (i & 1);
   }
-  return ans;
+  return dp;
 };
