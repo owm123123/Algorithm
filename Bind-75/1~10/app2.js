@@ -1,5 +1,4 @@
-//  Longest Palindromic Substring
-
+// * Longest Palindromic Substring
 // Given a string s, return the longest palindromic substring in s.
 
 // Input: s = "babad"
@@ -25,8 +24,8 @@ var lengthOfLongestSubstring = function (s) {
       l++;
     } else {
       set.add(s[r]);
+      max = Math.max(r - l + 1, max);
       r++;
-      max = Math.max(r - l, max);
     }
   }
   return max;
