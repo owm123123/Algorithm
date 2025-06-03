@@ -1,4 +1,4 @@
-// Group Anagrams
+// * Group Anagrams
 // Given an array of strings strs, group the anagrams together. You can return the answer in any order.
 
 // Input: strs = ["eat","tea","tan","ate","nat","bat"]
@@ -13,9 +13,13 @@
 
 // Input: strs = ["a"]
 // Output: [["a"]]
-// ---------------------------------------------------------
 
-// ----------------------------------------------------------
+/**
+ * ! map用法 (map to array)
+ * 1. [...map.values()]
+ * 2. Array.from(map.values())
+ * 3. [...map.entries()].map(([_, value]) => value)
+ */
 
 // Sorted
 /**
@@ -26,37 +30,10 @@ var groupAnagrams = function (strs) {
   const groups = new Map();
 
   for (let str of strs) {
-    // 用 sort 取代 charCodeAt
+    // ! str 做 sort 可以不用 for-each
     const key = str.split('').sort().join();
     if (groups.has(key)) groups.get(key).push(str);
     else groups.set(key, [str]);
-  }
-
-  return [...groups.values()];
-};
-
-// Array + charCodeAt
-/**
- * @param {string[]} strs
- * @return {string[][]}
- */
-var groupAnagrams = function (strs) {
-  const groups = new Map();
-
-  for (let str of strs) {
-    // 建立字母計數器
-    const count = new Array(26).fill(0);
-    for (let char of str) {
-      count[char.charCodeAt(0) - 'a'.charCodeAt(0)]++;
-    }
-
-    // 將字母計數器轉為鍵
-    const key = count.join('#'); // 用 '#' 分隔，避免數字連接混淆
-    if (groups.has(key)) {
-      groups.get(key).push(str);
-    } else {
-      groups.set(key, [str]);
-    }
   }
 
   return [...groups.values()];
