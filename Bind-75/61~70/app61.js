@@ -18,6 +18,7 @@ class Solution {
    */
   encode(strs) {
     // ! 注意 join 的用法
+    // ! join() = join(",") != join("")
     return strs.map((s) => s.length + '#' + s).join('');
   }
 
@@ -28,14 +29,16 @@ class Solution {
    */
   decode(str) {
     let result = [];
-    let i = 0;
+    let start = 0;
 
-    while (i < str.length) {
-      let temp = i;
-      while (str[temp] != '#') temp++;
-      let len = parseInt(str.slice(i, temp));
-      result.push(str.slice(temp + 1, temp + 1 + len));
-      i = temp + 1 + len;
+    while (start < str.length) {
+      // ! i 需放裡面做 reset
+      let i = start;
+      while (str[i] != '#') i++;
+      // ! 須記得 parseInt
+      let len = parseInt(str.slice(start, i));
+      result.push(str.slice(i + 1, i + 1 + len));
+      start = i + 1 + len;
     }
 
     return result;
