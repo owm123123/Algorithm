@@ -31,4 +31,46 @@
  * @param {number[][]} heights
  * @return {number[][]}
  */
-var pacificAtlantic = function (heights) {};
+var pacificAtlantic = function (heights) {
+  let rows = heights.length;
+  let cols = heights[0].length;
+  let result = [];
+
+  let PoDfs = (row, col) => {
+    if (row <= 0 || col <= 0) {
+      return true;
+    }
+
+    if (heights[row][col] > heights[row - 1][col]) {
+      PoDfs(row - 1, col);
+    }
+    if (heights[row][col] > heights[row][col - 1]) {
+      PoDfs(row, col - 1);
+    }
+
+    return false;
+  };
+
+  let AoDfs = (row, col) => {
+    if (row >= rows || col >= cols) {
+      return true;
+    }
+
+    if (heights[row][col] > heights[row + 1][col]) {
+      PoDfs(row + 1, col);
+    }
+    if (heights[row][col] > heights[row][col + 1]) {
+      PoDfs(row, col + 1);
+    }
+
+    return false;
+  };
+
+  for (let i = 0; i < rows; i++) {
+    for (let j = 0; j < cols; j++) {
+      if (PoDfs(i, j) && AoDfs(i, j)) {
+        result.push([i, j]);
+      }
+    }
+  }
+};
