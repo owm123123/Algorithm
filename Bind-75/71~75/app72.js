@@ -20,6 +20,7 @@
  */
 var characterReplacement = function (s, k) {
   let left = 0;
+  // * maxCount: 儲存"當前最多字"數量
   let maxCount = 0;
   let res = 0;
   const count = new Array(26).fill(0);
