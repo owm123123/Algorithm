@@ -17,18 +17,14 @@
  * @description // * hash
  */
 var isAnagram = function (s, t) {
-  if (s.length !== t.length) return false;
+  if (s.length != t.length) return false;
+  let count = new Array(26).fill(0);
+  let aCharCode = 'a'.charCodeAt(0);
 
-  let map = new Map();
-
-  for (let c of s) {
-    map.set(c, (map.get(c) || 0) + 1);
+  for (let i = 0; i < s.length; i++) {
+    count[s[i].charCodeAt(0) - aCharCode]++;
+    count[t[i].charCodeAt(0) - aCharCode]--;
   }
 
-  for (let c of t) {
-    if (!map.has(c) || map.get(c) === 0) return false;
-    map.set(c, map.get(c) - 1);
-  }
-
-  return true;
+  return count.every((e) => e === 0);
 };
