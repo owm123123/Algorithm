@@ -44,21 +44,19 @@ class Solution {
       graph[a].push(b);
       graph[b].push(a);
     }
-    let visited = new Set();
+    let visited = new Array(n).fill(false);
     let queue = [0];
+    visited[0] = true;
 
     while (queue.length) {
       let node = queue.shift();
-      if (!visited.has(node)) {
-        visited.add(node);
-        // * nei = neighbor
-        for (let nei of graph[node]) {
-          if (!visited.has(nei)) {
-            queue.push(nei);
-          }
+      for (let nei of graph[node]) {
+        if (!visited[nei]) {
+          visited[nei] = true;
+          queue.push(nei);
         }
       }
     }
-    return visited.size === n;
+    return visited.every((v) => v === true);
   }
 }
