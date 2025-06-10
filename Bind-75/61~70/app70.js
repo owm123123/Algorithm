@@ -11,13 +11,13 @@
  * @param {number} a
  * @param {number} b
  * @return {number}
- * @description // ! 看不懂這題
+ * @description // * 忘記可以參考影片
  */
 var getSum = function (a, b) {
   while (b !== 0) {
     let carry = (a & b) << 1; // 計算進位
     a = a ^ b; // 不進位的和
-    b = carry; // 把進位加回去
+    b = carry;
   }
   return a;
 };
