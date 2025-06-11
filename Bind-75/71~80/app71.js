@@ -32,45 +32,50 @@
  * @return {number[][]}
  */
 var pacificAtlantic = function (heights) {
-  let rows = heights.length;
-  let cols = heights[0].length;
-  let result = [];
+  /**
+   * * 思路
+   * * 不是每個格子往外走看能不能到海洋 (超時)
+   * * 海洋邊界往內走
+   */
+  const rows = heights.length,
+    cols = heights[0].length;
+  const pacific = Array.from({ length: rows }, () => Array(cols).fill(false));
+  const atlantic = Array.from({ length: rows }, () => Array(cols).fill(false));
+  const dirs = [
+    [1, 0],
+    [-1, 0],
+    [0, 1],
+    [0, -1],
+  ];
 
-  let PoDfs = (row, col) => {
-    if (row <= 0 || col <= 0) {
-      return true;
+  let dfs = (r, c, visited, prevHeight) => {
+    if (
+      r < 0 ||
+      r >= rows ||
+      c < 0 ||
+      c >= cols ||
+      visited[r][c] ||
+      heights[r][c] < prevHeight
+    )
+      return;
+    visited[r][c] = true;
+    for (let [dr, dc] of dirs) {
+      dfs(r + dr, c + dc, visited, heights[r][c]);
     }
+    // 從太平洋邊界出發
+    for (let i = 0; i < rows; i++) dfs(i, 0, pacific, -Infinity);
+    for (let j = 0; j < cols; j++) dfs(0, j, pacific, -Infinity);
 
-    if (heights[row][col] > heights[row - 1][col]) {
-      PoDfs(row - 1, col);
-    }
-    if (heights[row][col] > heights[row][col - 1]) {
-      PoDfs(row, col - 1);
-    }
+    // 從大西洋邊界出發
+    for (let i = 0; i < rows; i++) dfs(i, cols - 1, atlantic, -Infinity);
+    for (let j = 0; j < cols; j++) dfs(rows - 1, j, atlantic, -Infinity);
 
-    return false;
-  };
-
-  let AoDfs = (row, col) => {
-    if (row >= rows || col >= cols) {
-      return true;
-    }
-
-    if (heights[row][col] > heights[row + 1][col]) {
-      PoDfs(row + 1, col);
-    }
-    if (heights[row][col] > heights[row][col + 1]) {
-      PoDfs(row, col + 1);
-    }
-
-    return false;
-  };
-
-  for (let i = 0; i < rows; i++) {
-    for (let j = 0; j < cols; j++) {
-      if (PoDfs(i, j) && AoDfs(i, j)) {
-        result.push([i, j]);
+    const res = [];
+    for (let i = 0; i < rows; i++) {
+      for (let j = 0; j < cols; j++) {
+        if (pacific[i][j] && atlantic[i][j]) res.push([i, j]);
       }
     }
-  }
+    return res;
+  };
 };
