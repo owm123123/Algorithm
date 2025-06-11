@@ -67,7 +67,7 @@ var canFinish = function (numCourses, prerequisites) {
   // create graph
   const graph = Array.from({ length: numCourses }, () => []);
   for (let [a, b] of prerequisites) {
-    graph[b] = a;
+    graph[b].push(a);
   }
 
   // create visited 0:未訪問 1:訪問中 2:已訪問
@@ -79,13 +79,13 @@ var canFinish = function (numCourses, prerequisites) {
     if (visited[node] === 1) return true;
     if (visited[node] === 2) return false;
 
-    visited[node] = 2;
+    visited[node] = 1;
 
     for (let next of graph[node]) {
       if (hasCycle(next)) return true;
     }
 
-    visited[node] = 3;
+    visited[node] = 2;
     return false;
   };
 
