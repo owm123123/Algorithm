@@ -1,5 +1,6 @@
 // * Merge K Sorted Linked Lists
 // You are given an array of k linked lists lists, where each list is sorted in ascending order.
+// ! 這裡有告訴你每個 list 已經 sorted 過了
 // Return the sorted linked list that is the result of merging all of the individual linked lists.
 
 // Input: lists = [[1,2,4],[1,3,5],[3,6]]
@@ -21,11 +22,63 @@
  * }
  */
 
+// * 最佳實踐 (Todo 待了解)
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val, next) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.next = (next===undefined ? null : next)
+ * }
+ */
+/**
+ * @param {ListNode[]} lists
+ * @return {ListNode}
+ */
+var mergeKLists = function (lists) {
+  if (lists.length === 0) {
+    return null;
+  }
+
+  while (lists.length > 1) {
+    const merged = [];
+    const size = lists.length;
+
+    for (let i = 0; i < size; i += 2) {
+      const l1 = lists[i];
+      const l2 = i + 1 < lists.length ? lists[i + 1] : null;
+      merged.push(mergeLists(l1, l2));
+    }
+
+    lists = merged;
+  }
+
+  return lists[0];
+};
+
+function mergeLists(l1, l2) {
+  const head = new ListNode(0);
+  let cur = head;
+  while (l1 !== null && l2 !== null) {
+    if (l1.val < l2.val) {
+      cur.next = l1;
+      l1 = l1.next;
+    } else {
+      cur.next = l2;
+      l2 = l2.next;
+    }
+    cur = cur.next;
+  }
+  cur.next = l1 === null ? l2 : l1;
+  return head.next;
+}
+
+// * heap 簡易版本
 class Solution {
   /**
    * @param {ListNode[]} lists
    * @return {ListNode}
    * @description // * min heap : priority queue
+   * // ! 在 leetcode跑不過
    */
   mergeKLists(lists) {
     if (!lists || lists.length === 0) return null;
@@ -42,6 +95,7 @@ class Solution {
     let curr = dummy;
 
     while (!minHeap.isEmpty()) {
+      // ! 要注意 lists 是一個 ListNode[] 喔
       const node = minHeap.dequeue();
       curr.next = node;
       curr = curr.next;
