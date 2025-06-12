@@ -132,3 +132,41 @@ var canFinish = function (numCourses, prerequisites) {
 
   return count === numCourses;
 };
+//-------------------------
+/**
+ * @param {number} numCourses
+ * @param {number[][]} prerequisites
+ * @return {boolean}
+ * @description // * beat91* map + array
+ * // * node 只進 queue 一次 出去一次
+ */
+var canFinish = function (numCourses, prerequisites) {
+  const adj = new Map();
+  const indegree = Array(numCourses).fill(0);
+
+  // Build adjacency list and indegree array
+  prerequisites.forEach(([u, v]) => {
+    if (!adj.has(v)) adj.set(v, []);
+    adj.get(v).push(u);
+    indegree[u]++;
+  });
+
+  // Collect courses with no prerequisites
+  const queue = indegree
+    .map((deg, i) => (deg === 0 ? i : null))
+    .filter((i) => i !== null);
+
+  let count = 0;
+
+  while (queue.length > 0) {
+    const course = queue.shift();
+    count++;
+
+    (adj.get(course) || []).forEach((next) => {
+      indegree[next]--;
+      if (indegree[next] === 0) queue.push(next);
+    });
+  }
+
+  return count === numCourses;
+};
