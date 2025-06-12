@@ -62,6 +62,7 @@
  * @param {number} numCourses
  * @param {number[][]} prerequisites
  * @return {boolean}
+ * @description // * DFS檢查有無cycle (無法得到修課順序)
  */
 var canFinish = function (numCourses, prerequisites) {
   // create graph
@@ -93,4 +94,41 @@ var canFinish = function (numCourses, prerequisites) {
     if (hasCycle(i)) return false;
   }
   return true;
+};
+//-------------------------
+/**
+ * @param {number} numCourses
+ * @param {number[][]} prerequisites
+ * @return {boolean}
+ * @description // * Topological sort (可得到修課順序)
+ * // ! Topological sort 效率比上面差,有必要再使用
+ */
+var canFinish = function (numCourses, prerequisites) {
+  // create graph
+  let graph = Array.from({ length: numCourses });
+  let indegree = new Array(numCourses).fill(0);
+  for (let [a, b] of prerequisites) {
+    graph[b].push(a);
+    indegree[a]++;
+  }
+
+  // 將所有 indegree 為 0 放入 queue
+  let queue = [];
+  for (let i = 0; i < numCourses; i++) {
+    if (numCourses[i] === 0) {
+      queue.push(i);
+    }
+  }
+
+  let count = 0;
+  while (queue.length) {
+    const node = queue.shift();
+    count++;
+    for (let next of graph[node]) {
+      indegree[next]--;
+      if (indegree[next] === 0) queue.push(next);
+    }
+  }
+
+  return count === numCourses;
 };
