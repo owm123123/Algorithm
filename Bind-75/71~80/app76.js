@@ -30,6 +30,11 @@ var combinationSum = function (candidates, target) {
    */
   let backtrack = (remain, path, start) => {
     if (remain === 0) {
+      /**
+       * ! js 補充
+       * ! result.push([...path]); -> 複製一份 arr, 指向 不同的 記憶體
+       * ! result.push(path); -> 指向同一個記憶體 path 改變, 他會跟著改變
+       */
       result.push([...path]);
       return;
     }
@@ -37,10 +42,12 @@ var combinationSum = function (candidates, target) {
       return;
     }
     // [2, 3, 6, 7], 7
+    // ! i = start 避免回頭選，解決重複的問題
     for (let i = start; i < candidates.length; i++) {
       path.push(candidates[i]);
+      // ! path 共用同一組即可
       backtrack(remain - candidates[i], path, i);
-      // * 遞迴下去後，要把剛剛加的數字移除（path.pop()），這樣才能回到上一層，嘗試其他組合（這就是"回溯"）。
+      // * 把 push 的值 pop 出來, 達到 回溯 的效果
       path.pop();
     }
   };
