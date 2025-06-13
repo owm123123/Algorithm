@@ -22,7 +22,7 @@
  * }
  */
 
-// * 最佳實踐 (Todo 待了解)
+// * Divide and Conquer (最佳解)
 /**
  * Definition for singly-linked list.
  * function ListNode(val, next) {
@@ -33,19 +33,19 @@
 /**
  * @param {ListNode[]} lists
  * @return {ListNode}
+ * @description // * Divide and Conquer
  */
 var mergeKLists = function (lists) {
-  if (lists.length === 0) {
-    return null;
-  }
+  if (lists.length === 0) return null;
 
   while (lists.length > 1) {
-    const merged = [];
-    const size = lists.length;
+    let merged = [];
+    let size = lists.length;
 
+    // * i += 2 是精隨
     for (let i = 0; i < size; i += 2) {
-      const l1 = lists[i];
-      const l2 = i + 1 < lists.length ? lists[i + 1] : null;
+      const l1 = i;
+      const l2 = i + 1 < size ? lists[i + 1] : null;
       merged.push(mergeLists(l1, l2));
     }
 
@@ -56,23 +56,23 @@ var mergeKLists = function (lists) {
 };
 
 function mergeLists(l1, l2) {
-  const head = new ListNode(0);
-  let cur = head;
-  while (l1 !== null && l2 !== null) {
+  const dummy = ListNode();
+  let curr = dummy;
+  while (l1 !== null || l2 !== null) {
     if (l1.val < l2.val) {
-      cur.next = l1;
+      curr.next = l1;
       l1 = l1.next;
     } else {
-      cur.next = l2;
+      curr.next = l2;
       l2 = l2.next;
     }
-    cur = cur.next;
+    curr = curr.next;
   }
-  cur.next = l1 === null ? l2 : l1;
-  return head.next;
+  curr.next = l1 === null ? l2 : l1;
+  return dummy.next;
 }
 
-// * heap 簡易版本
+// minHeap 簡易版本
 class Solution {
   /**
    * @param {ListNode[]} lists
@@ -101,85 +101,6 @@ class Solution {
       curr = curr.next;
       // ! 將 node 的 next 放入 heap 裡
       if (node.next) minHeap.enqueue(node.next);
-    }
-
-    return dummy.next;
-  }
-}
-
-// * 下面為 neetcode 解答, 須自己實作 heap
-/**
- * Definition for singly-linked list.
- * class ListNode {
- *     constructor(val = 0, next = null) {
- *         this.val = val;
- *         this.next = next;
- *     }
- * }
- */
-
-class MinHeap {
-  constructor() {
-    this.heap = [];
-  }
-  push(node) {
-    this.heap.push(node);
-    this._bubbleUp(this.heap.length - 1);
-  }
-  pop() {
-    if (this.heap.length === 1) return this.heap.pop();
-    const top = this.heap[0];
-    this.heap[0] = this.heap.pop();
-    this._bubbleDown(0);
-    return top;
-  }
-  _bubbleUp(i) {
-    while (i > 0) {
-      let p = Math.floor((i - 1) / 2);
-      if (this.heap[p].val <= this.heap[i].val) break;
-      [this.heap[p], this.heap[i]] = [this.heap[i], this.heap[p]];
-      i = p;
-    }
-  }
-  _bubbleDown(i) {
-    let n = this.heap.length;
-    while (true) {
-      let l = 2 * i + 1,
-        r = 2 * i + 2,
-        min = i;
-      if (l < n && this.heap[l].val < this.heap[min].val) min = l;
-      if (r < n && this.heap[r].val < this.heap[min].val) min = r;
-      if (min === i) break;
-      [this.heap[i], this.heap[min]] = [this.heap[min], this.heap[i]];
-      i = min;
-    }
-  }
-  size() {
-    return this.heap.length;
-  }
-}
-
-class Solution {
-  /**
-   * @param {ListNode[]} lists
-   * @return {ListNode}
-   */
-  mergeKLists(lists) {
-    if (!lists || lists.length === 0) return null;
-    let minHeap = new MinHeap();
-
-    for (let node of lists) {
-      minHeap.push(node);
-    }
-
-    const dummy = new ListNode(-1);
-    let curr = dummy;
-
-    while (minHeap.size() !== 0) {
-      let node = minHeap.pop();
-      curr.next = node;
-      curr = curr.next;
-      if (node) minHeap.push(node.next);
     }
 
     return dummy.next;
