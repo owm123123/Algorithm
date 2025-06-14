@@ -33,10 +33,12 @@ var kthSmallest = function (root, k) {
   let result = [];
 
   // * inorder: left root right
+  // ! 這一題是回傳值, 沒有說要回傳 index
   const inorder = (node) => {
     if (!node) return;
     inorder(node.left);
-    result.push(node);
+    if (result.length >= k) return; // * 優化
+    result.push(node.val);
     inorder(node.right);
   };
 
