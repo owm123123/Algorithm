@@ -12,8 +12,6 @@
 // Input: list1 = [], list2 = [0]
 // Output: [0]
 
-// ----------------------------------------------------------
-
 /**
  * Definition for singly-linked list.
  * function ListNode(val, next) {
