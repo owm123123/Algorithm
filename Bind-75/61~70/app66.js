@@ -19,6 +19,7 @@
  * @return {number}
  */
 var coinChange = function (coins, amount) {
+  // ! 組成 amount 的最少硬幣數, 不能考慮當下最優解，所不能使用 greedy
   if (amount === 0) return 0;
 
   let dp = new Array(amount + 1).fill(Infinity);
