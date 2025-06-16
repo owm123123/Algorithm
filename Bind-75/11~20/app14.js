@@ -19,12 +19,15 @@
  * @description // * Kadane's Algorithm: dp 的空間優化
  */
 var maxSubArray = function (nums) {
+  // * Greedy: 每次遍歷到一個數字 n，決定要不要把前面的和累加下去（如果前面的和 < 0 就丟掉，從 n 重新開始）。
+
   let max = nums[0];
   // * 當前的和
   let curr = nums[0];
 
   for (let i = 1; i < nums.length; i++) {
-    // * 可以這樣做是因為搞不好後面的數字很大，大到可以包含前面負的
+    // * 檢查是當前數字大, 還是加前面大, 可以說明檢查 curr > 0
+    // * 比較「只選當前數」和「累加前面的和」哪個大，決定是否重新開始一段子陣列 (GPT)
     curr = Math.max(nums[i], nums[i] + curr);
     max = Math.max(max, curr);
   }
