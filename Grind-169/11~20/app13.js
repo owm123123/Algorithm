@@ -64,3 +64,45 @@ var updateMatrix = function (mat) {
 
   return result;
 };
+
+// ! 待了解
+// * beat100% dp
+function updateMatrix(mat) {
+  const m = mat.length;
+  const n = mat[0].length;
+
+  // * 左上 -> 右下
+  for (let i = 0; i < m; i++) {
+    for (let j = 0; j < n; j++) {
+      if (mat[i][j]) {
+        let top = Infinity;
+        let left = Infinity;
+        if (i > 0) {
+          top = mat[i - 1][j];
+        }
+        if (j > 0) {
+          left = mat[i][j - 1];
+        }
+        mat[i][j] = 1 + Math.min(top, left);
+      }
+    }
+  }
+
+  // * 右下 -> 左上
+  for (let i = m - 1; i >= 0; i--) {
+    for (let j = n - 1; j >= 0; j--) {
+      if (mat[i][j]) {
+        let bottom = Infinity;
+        let right = Infinity;
+        if (i < m - 1) {
+          bottom = mat[i + 1][j];
+        }
+        if (j < n - 1) {
+          right = mat[i][j + 1];
+        }
+        mat[i][j] = Math.min(mat[i][j], 1 + Math.min(bottom, right));
+      }
+    }
+  }
+  return mat;
+}
