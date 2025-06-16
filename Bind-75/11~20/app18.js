@@ -24,12 +24,14 @@ var insert = function (intervals, newInterval) {
   let result = [];
   let i = 0;
 
+  // !用 while 取代 break;
   while (i < intervals.length && intervals[i][1] < newInterval[0]) {
     result.push(intervals[i]);
     i++;
   }
 
-  // 上面的 while 已經比完 newInterval[0] 了, 所以只要比 <= newInterval[1] 就好
+  // * 上面的 while 已經比完 newInterval[0] 了, 所以只要比 <= newInterval[1] 就好
+  // !用 while 取代 break;
   while (i < intervals.length && intervals[i][0] <= newInterval[1]) {
     newInterval[0] = Math.min(intervals[i][0], newInterval[0]);
     newInterval[1] = Math.max(intervals[i][1], newInterval[1]);
