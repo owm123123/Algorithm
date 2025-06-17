@@ -33,6 +33,7 @@ var hasCycle = function (head) {
   let slow = head;
   let fast = head;
 
+  // * 只要有一個為 null，代表沒有 cycle。
   while (fast && fast.next) {
     slow = slow.next;
     fast = fast.next.next;
