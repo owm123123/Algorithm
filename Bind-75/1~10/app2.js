@@ -1,32 +1,39 @@
-// * Longest Palindromic Substring
-// Given a string s, return the longest palindromic substring in s.
+// * Longest Substring Without Repeating Characters
+// Given a string s, find the length of the longest substring without duplicate characters.
 
-// Input: s = "babad"
-// Output: "bab"
-// Explanation: "aba" is also a valid answer.
+// Input: s = "abcabcbb"
+// Output: 3
+// Explanation: The answer is "abc", with the length of 3.
 
-// Input: s = "cbbd"
-// Output: "bb"
+// Input: s = "bbbbb"
+// Output: 1
+// Explanation: The answer is "b", with the length of 1.
+
+// Input: s = "pwwkew"
+// Output: 3
+// Explanation: The answer is "wke", with the length of 3.
+// Notice that the answer must be a substring, "pwke" is a subsequence and not a substring.
 
 /**
  * @param {string} s
  * @return {number}
  */
 var lengthOfLongestSubstring = function (s) {
-  let l = 0;
-  let r = 0;
-  let set = new Set();
   let max = 0;
+  let l = 0;
+  let set = new Set();
 
-  while (r < s.length) {
+  for (let r = 0; r < s.length; r++) {
+    let temp = r - l + 1;
     if (set.has(s[r])) {
-      set.delete(s[l]);
-      l++;
-    } else {
-      set.add(s[r]);
-      max = Math.max(r - l + 1, max);
-      r++;
+      while (set.has(s[r])) {
+        set.delete(s[l]);
+        l++;
+      }
     }
+    set.add(s[r]);
+    max = Math.max(max, r - l + 1);
   }
+
   return max;
 };
