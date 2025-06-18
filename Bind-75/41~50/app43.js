@@ -17,9 +17,7 @@
 //   ["0","0","0","1","1"]
 // ]
 // Output: 3
-//-------------------------
 
-//-------------------------
 /**
  * @param {character[][]} grid
  * @return {number}
@@ -31,7 +29,7 @@ var numIslands = function (grid) {
 
   const dfs = (row, col) => {
     if (row < 0 || col < 0 || row >= rows || col >= cols) return;
-    if (grid[row][col] === '0') return;
+    if (grid[row][col] === '1') return;
 
     grid[row][col] = '0';
 
