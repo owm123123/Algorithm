@@ -37,10 +37,13 @@ var diffWaysToCompute = function (expression) {
   let dfs = (expr) => {
     if (memo.has(expr)) return memo.get(expr);
 
+    // * 所有解 number[]
     let res = [];
     for (let i = 0; i < expr.length; i++) {
       if ('+-*'.includes(expr[i])) {
+        // * 所有左邊的解 number[]
         let left = dfs(expr.slice(0, i));
+        // * 所有右邊的解 number[]
         let right = dfs(expr.slice(i + 1));
         for (let l of left) {
           for (let r of right) {
