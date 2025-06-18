@@ -1,4 +1,5 @@
 // * Different Ways to Add Parentheses
+// * 影片: https://www.youtube.com/watch?v=gxYV8eZY0eQ
 // Given a string expression of numbers and operators, return all possible results from computing all the different possible ways to group numbers and operators. You may return the answer in any order.
 
 // The test cases are generated such that the output values fit in a 32-bit integer and the number of different results does not exceed 104.
@@ -21,13 +22,14 @@
 // ! 以後可能要看下面了 下面有說不會給 / 這個 operator
 // Constraints:
 // 1 <= expression.length <= 20
-// expression consists of digits and the operator '+', '-', and '*'.
+// * expression consists of digits and the operator '+', '-', and '*'.
 // All the integer values in the input expression are in the range [0, 99].
 // The integer values in the input expression do not have a leading '-' or '+' denoting the sign.
 
 /**
  * @param {string} expression
  * @return {number[]}
+ * @description // * 跟 140 word break II 的思路是一樣的，recursion處理子問題存入 memo 中
  */
 var diffWaysToCompute = function (expression) {
   let memo = new Map();
