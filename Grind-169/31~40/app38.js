@@ -27,10 +27,11 @@ var permute = function (nums) {
     for (let i = 0; i < nums.length; i++) {
       // * 剪枝
       if (used[i]) continue;
-      // * 回溯
+      // * used[i] 用來記錄 nums[i] 是否已經使用過
       used[i] = true;
       path.push(nums[i]);
       dfs(path, used);
+      // * 回溯
       path.pop();
       used[i] = false;
     }
