@@ -54,6 +54,7 @@ var updateMatrix = function (mat) {
         nr < rows &&
         nc >= 0 &&
         nc < cols &&
+        // ! 新位置 > 目前位置 + 1 = 到了一條更短的路徑
         result[nr][nc] > result[r][c] + 1
       ) {
         result[nr][nc] = result[r][c] + 1;
@@ -65,42 +66,41 @@ var updateMatrix = function (mat) {
   return result;
 };
 
-// ! 待了解
 // * beat100% dp
 function updateMatrix(mat) {
-  const m = mat.length;
-  const n = mat[0].length;
+  const rows = mat.length;
+  const cols = mat[0].length;
 
   // * 左上 -> 右下
-  for (let i = 0; i < m; i++) {
-    for (let j = 0; j < n; j++) {
-      if (mat[i][j]) {
+  for (let r = 0; r < rows; r++) {
+    for (let c = 0; c < cols; c++) {
+      if (mat[r][c]) {
         let top = Infinity;
         let left = Infinity;
-        if (i > 0) {
-          top = mat[i - 1][j];
+        if (r > 0) {
+          top = mat[r - 1][c];
         }
-        if (j > 0) {
-          left = mat[i][j - 1];
+        if (c > 0) {
+          left = mat[r][c - 1];
         }
-        mat[i][j] = 1 + Math.min(top, left);
+        mat[r][c] = 1 + Math.min(top, left);
       }
     }
   }
 
   // * 右下 -> 左上
-  for (let i = m - 1; i >= 0; i--) {
-    for (let j = n - 1; j >= 0; j--) {
-      if (mat[i][j]) {
+  for (let r = rows - 1; r >= 0; r--) {
+    for (let c = cols - 1; c >= 0; c--) {
+      if (mat[r][c]) {
         let bottom = Infinity;
         let right = Infinity;
-        if (i < m - 1) {
-          bottom = mat[i + 1][j];
+        if (r < rows - 1) {
+          bottom = mat[r + 1][c];
         }
-        if (j < n - 1) {
-          right = mat[i][j + 1];
+        if (c < cols - 1) {
+          right = mat[r][c + 1];
         }
-        mat[i][j] = Math.min(mat[i][j], 1 + Math.min(bottom, right));
+        mat[r][c] = Math.min(mat[r][c], 1 + Math.min(bottom, right));
       }
     }
   }
