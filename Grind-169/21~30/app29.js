@@ -25,7 +25,9 @@ var climbStairs = function (n) {
   // 可將空間優化
   // dp[1] = 1;
   // dp[2] = 2;
+  // * 爬到前前一階（第 i-2 階）的方法數
   let prev1 = 1;
+  // * 代表「爬到前一階（第 i-1 階）的方法數」
   let prev2 = 2;
 
   for (let i = 3; i <= n; i++) {
