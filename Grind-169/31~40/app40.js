@@ -29,9 +29,22 @@
 var lowestCommonAncestor = function (root, p, q) {
   // * Binary Tree: 沒有規定 left < root， right > root
 
-  if (!root || root === p || root === q) return root;
+  /**
+   * * 遞迴流程
+   * * 1. 遇到空節點，回傳 null
+   * * 2. 遇到 p 或 q，回傳自己（因為自己就是祖先）
+   * * 3. 遞迴找左子樹、右子樹
+   * * 4. 如果左右子樹都不是 null，代表 p、q 分別在左右，root 就是祖先
+   * * 5. 如果只有一邊不是 null，代表 p、q 都在那一邊，往上傳那一邊的結果
+   */
+
+  if (!root) return null; // 空節點
+  if (root === p || root === q) return root; // 找到 p 或 q
+
   let left = lowestCommonAncestor(root.left, p, q);
   let right = lowestCommonAncestor(root.right, p, q);
-  if (left && right) return root;
-  return left ? left : right;
+
+  if (left && right) return root; // p, q 分別在左右
+  if (left) return left; // 都在左
+  if (right) return right; // 都在右
 };
