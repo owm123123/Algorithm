@@ -41,8 +41,11 @@ var TimeMap = function () {
  * @return {void}
  */
 TimeMap.prototype.set = function (key, value, timestamp) {
-  if (!this.map.has(key)) this.map.set(key, []);
-  this.map.get(key).push([timestamp, value]);
+  if (this.map.has(key)) {
+    this.map.get(key).push([value, timestamp]);
+  } else {
+    this.map.set(key, [[value, timestamp]]);
+  }
 };
 
 /**
@@ -51,24 +54,24 @@ TimeMap.prototype.set = function (key, value, timestamp) {
  * @return {string}
  */
 TimeMap.prototype.get = function (key, timestamp) {
-  if (!this.map.has(key)) return '';
-  const arr = this.map.get(key); // [][number, value]
-  let left = 0;
-  let right = arr.length - 1;
-  let res = '';
-  while (left <= right) {
-    let mid = Math.floor((left + right) / 2);
-    let num = arr[mid][0];
-    // * 因為這提示說明 要找 <= timestamp 的最大 timestamp
-    if (num <= timestamp) {
-      // 目前這個 timestamp 可用，繼續往右找更大的
-      res = arr[mid][1];
-      left = mid + 1;
-    } else {
-      right = mid - 1;
+  if (this.map.has(key)) {
+    let arrs = this.map.get(key);
+    let l = 0,
+      r = arrs.length;
+    while (l < r) {
+      let mid = Math.floor(l + (r - l) / 2);
+      if (timestamp === arrs[mid][1]) return arrs[mid][0];
+      if (arrs[mid][1] > timestamp) {
+        r = mid;
+      } else {
+        l = mid + 1;
+      }
     }
+    if (l === 0) return '';
+    // * 這裡用 upper bound (第一個大於 timestamp) 所以需要 l - 1
+    return arrs[l - 1][0];
   }
-  return res;
+  return '';
 };
 
 /**
