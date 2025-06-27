@@ -1,4 +1,5 @@
 // * Reverse Linked List
+// * 影片參考: https://www.geeksforgeeks.org/dsa/reverse-a-linked-list/
 // Given the head of a singly linked list, reverse the list, and return the reversed list.
 
 // Input: head = [1,2,3,4,5]
@@ -30,11 +31,19 @@
  * @return {ListNode}
  */
 var reverseList = function (head) {
-  if (!head || !head.next) return head;
-  let newNode = reverseList(head.next);
-  // * 反轉指向 -> 把下一個節點的 next 指回自己，實現反轉
-  head.next.next = head;
-  // * 斷開原本的 next -> 斷開原本的 next，避免成環。
-  head.next = null;
-  return newNode;
+  // * 目前正在處理的節點
+  let curr = head;
+  // * 已經反轉好的前一個節點
+  let prev = null;
+  // * 暫存 curr 的下一個節點，避免指標斷掉
+  let next = null;
+
+  while (curr !== null) {
+    next = curr.next;
+    curr.next = prev;
+    prev = curr;
+    curr = next;
+  }
+
+  return prev;
 };
