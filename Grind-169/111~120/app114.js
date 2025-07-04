@@ -26,7 +26,7 @@ var maximalSquare = function (matrix) {
   const cols = matrix[0].length;
   let maxLen = 0;
   let dp = Array.from({ length: rows + 1 }, () => Array(cols + 1).fill(0));
-  for (let r = 1; r < rols + 1; r++) {
+  for (let r = 1; r < rows + 1; r++) {
     for (let c = 1; c < cols + 1; c++) {
       if (matrix[r - 1][c - 1] === '1') {
         dp[r][c] = 1 + Math.min(dp[r - 1][c], dp[r - 1][c - 1], dp[r][c - 1]);
