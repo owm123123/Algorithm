@@ -12,7 +12,6 @@
 // Output: 1
 
 // Note: (0,8),(8,10) is not considered a conflict at 8
-//-------------------------
 
 /**
  * Definition of Interval:
