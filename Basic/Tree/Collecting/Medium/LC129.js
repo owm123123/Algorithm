@@ -37,4 +37,15 @@
  * @param {TreeNode} root
  * @return {number}
  */
-var sumNumbers = function (root) {};
+var sumNumbers = function (root) {
+  let sum = 0;
+  let dfs = (node, preSum) => {
+    if (!node) return;
+    let currSum = preSum * 10 + node.val;
+    if (!node.left && !node.right) sum += currSum;
+    if (node.left) dfs(node.left, currSum);
+    if (node.right) dfs(node.right, currSum);
+  };
+  dfs(root, 0);
+  return sum;
+};
