@@ -18,7 +18,7 @@
 // 0 <= nums[i] <= 106
 // 1 <= k <= min(50, nums.length)
 
-// * BS
+// * BS (待理解)
 /**
  * @param {number[]} nums
  * @param {number} k
