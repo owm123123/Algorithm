@@ -59,17 +59,20 @@ TimeMap.prototype.get = function (key, timestamp) {
   // [bar, 1], [bar2, 4]
   let arrs = this.map.get(key);
   let left = 0;
-  let right = arrs.length;
+  let right = arrs.length - 1;
 
   // * upper_bound
-  while (left < right) {
-    let mid = Math.floor((right + left) / 2);
+  while (left <= right) {
+    let mid = Math.floor(left + (right - left) / 2);
+    if (arrs[mid][1] === timestamp) return arrs[mid][0];
     if (arrs[mid][1] > timestamp) {
-      right = mid;
+      right = mid - 1;
     } else {
       left = mid + 1;
     }
   }
+
+  // ! left 會停在 第一個大於 timestamp 的位置
   if (left === 0) return '';
   return arrs[left - 1][0];
 };

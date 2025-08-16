@@ -19,35 +19,43 @@
 
 // Follow up: This problem is similar to Search in Rotated Sorted Array, but nums may contain duplicates. Would this affect the runtime complexity? How and why?
 
-/**
- * @param {number[]} nums
- * @param {number} target
- * @return {boolean}
- */
-var search = function (nums, target) {
-  let left = 0,
-    right = nums.length - 1;
+class Solution {
+  /**
+   * @param {number[]} nums
+   * @param {number} target
+   * @return {boolean}
+   */
+  search(nums, target) {
+    let left = 0,
+      right = nums.length - 1;
 
-  // 2,5,6,0,0,1,2
-  while (left <= right) {
-    let mid = Math.floor(left + (right - left) / 2);
-    if (nums[mid] === target) return true;
+    while (left <= right) {
+      let mid = Math.floor(left + (right - left) / 2);
+      if (nums[mid] === target) return true;
 
-    if (nums[left] === nums[mid]) {
-      left++;
-    } else if (nums[left] < nums[mid]) {
-      if (nums[left] <= target && nums[mid] > target) {
-        right = mid - 1;
-      } else {
-        left = mid + 1;
+      // * 注意左閉右開 nums[right - 1]
+      // * 說明
+      // * nums = [2,2,2,3,2,2,2]
+      // * 當 nums[left] == nums[mid] == nums[right], 只根據 nums[left] <= nums[mid] 無法判斷
+      if (nums[left] === nums[mid] && nums[mid] === nums[right]) {
+        left++;
+        right--;
       }
-    } else {
-      if (nums[right] >= target && nums[mid] < target) {
-        left = mid + 1;
+      // 3 4 5 0 1 2
+      else if (nums[mid] <= nums[right]) {
+        if (nums[mid] < target && target <= nums[right]) {
+          left = mid + 1;
+        } else {
+          right = mid - 1;
+        }
       } else {
-        right = mid - 1;
+        if (nums[mid] > target && target >= nums[left]) {
+          right = mid - 1;
+        } else {
+          left = mid + 1;
+        }
       }
     }
+    return false;
   }
-  return false;
-};
+}
