@@ -26,34 +26,20 @@
  * @return {number}
  */
 var findMin = function (nums) {
-  let left = 0;
-  let right = nums.length - 1;
+  let left = 0,
+    right = nums.length - 1;
+
   while (left < right) {
-    let mid = Math.floor((left + right) / 2);
-    if (nums[mid] < nums[right]) {
-      right = mid;
+    let mid = Math.floor(left + (right - left) / 2);
+
+    if (nums[mid] === nums[right]) {
+      right--;
     } else if (nums[mid] > nums[right]) {
       left = mid + 1;
     } else {
-      // * nums[mid] == nums[right]
-      // * 無法判斷最小值在哪一邊，只能縮小右邊界
-      right--;
+      right = mid;
     }
   }
-  return nums[left];
-};
 
-// * 分治法
-/**
- * @param {number[]} nums
- * @return {number}
- */
-var findMin = function (nums) {
-  let find = (arr, l, r) => {
-    if (l == r) return arr[l];
-    if (arr[l] < arr[r]) return arr[l];
-    let mid = Math.floor((l + r) / 2);
-    return Math.min(find(arr, l, mid), find(arr, mid + 1, r));
-  };
-  return find(nums, 0, nums.length - 1);
+  return nums[left];
 };

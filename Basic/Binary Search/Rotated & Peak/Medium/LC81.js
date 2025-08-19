@@ -25,31 +25,27 @@
  * @return {boolean}
  */
 var search = function (nums, target) {
-  let left = 0;
-  let right = nums.length;
+  let left = 0,
+    right = nums.length - 1;
 
-  while (left < right) {
-    let mid = Math.floor((left + right) / 2);
+  // 2,5,6,0,0,1,2
+  while (left <= right) {
+    let mid = Math.floor(left + (right - left) / 2);
     if (nums[mid] === target) return true;
 
-    // * 注意左閉右開 nums[right - 1]
-    // * 說明
-    // * nums = [2,2,2,3,2,2,2]
-    // * 當 nums[left] == nums[mid] == nums[right], 只根據 nums[left] <= nums[mid] 無法判斷
-    if (nums[left] === nums[mid] && nums[mid] === nums[right - 1]) {
+    if (nums[left] === nums[mid]) {
       left++;
-      right--;
-    } else if (nums[left] <= nums[mid]) {
-      if (nums[left] <= target && nums[mid] >= target) {
-        right = mid;
+    } else if (nums[left] < nums[mid]) {
+      if (nums[left] <= target && nums[mid] > target) {
+        right = mid - 1;
       } else {
         left = mid + 1;
       }
     } else {
-      if (target <= nums[right - 1] && nums[mid] < target) {
+      if (nums[right] >= target && nums[mid] < target) {
         left = mid + 1;
       } else {
-        right = mid;
+        right = mid - 1;
       }
     }
   }

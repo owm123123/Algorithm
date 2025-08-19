@@ -27,29 +27,29 @@
  */
 var search = function (nums, target) {
   let left = 0;
-  let right = nums.length;
+  let right = nums.length - 1;
 
   // [4,5,6,7,0,1,2] target = 0
-  while (left < right) {
-    let mid = Math.floor((left + right) / 2);
+  while (left <= right) {
+    let mid = Math.floor(left + (right - left) / 2);
     if (nums[mid] === target) return mid;
 
     // * 判斷正向 處理正向
     if (nums[left] <= nums[mid]) {
       // * nums[left] <= target: 確定在左半區
       // * nums[mid] >= target: lower_bound 規則
-      if (nums[left] <= target && nums[mid] >= target) {
-        right = mid;
+      if (nums[left] <= target && nums[mid] > target) {
+        right = mid - 1;
       } else {
         left = mid + 1;
       }
     } else {
       // * target <= nums[right - 1]: 確定在右半區
       // * nums[mid] < target: lower_bound 規則
-      if (target <= nums[right - 1] && nums[mid] < target) {
+      if (target <= nums[right] && nums[mid] < target) {
         left = mid + 1;
       } else {
-        right = mid;
+        right = mid - 1;
       }
     }
   }

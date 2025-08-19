@@ -32,16 +32,17 @@
  * @return {number}
  */
 var findMin = function (nums) {
-  let left = 0;
-  let right = nums.length; // 左閉右開
+  // [4,5,6,7,0,1,2]
+  let left = 0,
+    right = nums.length - 1;
 
-  while (left < right - 1) {
-    // 保證 left+1 == right 時結束
-    let mid = Math.floor((left + right) / 2);
-    if (nums[mid] < nums[right - 1]) {
-      right = mid + 1; // 最小值在左半區（包含 mid）
+  while (left < right) {
+    let mid = Math.floor(left + (right - left) / 2);
+    // ! 條件設定成 nums[mid] > nums[left] 可以少判斷, 因為 旋轉點一定在右邊
+    if (nums[mid] > nums[right]) {
+      left = mid + 1;
     } else {
-      left = mid; // 最小值在右半區
+      right = mid;
     }
   }
   return nums[left];
