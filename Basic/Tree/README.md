@@ -12,9 +12,10 @@ Collecting
 # 669. Trim a Binary Search Tree
 # 814. Binary Tree Pruning
 # 1325. Delete Leaves With a Given Value
-
+---------------------------------------------
 Compare
 
+---------------------------------------------
 # 701. Insert into a Binary Search Tree
 # 450. Delete Node in a BST
 

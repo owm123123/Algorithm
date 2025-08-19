@@ -31,10 +31,10 @@ class Solution {
     let carry = 0;
     let res = '';
 
-    while (lenA > 0 || lenB > 0 || carry > 0) {
+    while (lenA >= 0 || lenB >= 0 || carry > 0) {
       let sum = 0;
-      if (lenA > 0) sum += Number(a[lenA--]);
-      if (lenB > 0) sum += Number(b[lenB--]);
+      if (lenA >= 0) sum += Number(a[lenA--]);
+      if (lenB >= 0) sum += Number(b[lenB--]);
       sum += carry;
       res = (sum % 2) + res;
       carry = Math.floor(sum / 2);
