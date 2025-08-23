@@ -1,5 +1,5 @@
 /**
- * 26. Remove Duplicates from Sorted Array
+ * * LeetCode 26. Remove Duplicates from Sorted Array
  *
  * Given an integer array nums sorted in non-decreasing order,
  * remove the duplicates in-place such that each unique element appears only once.
@@ -13,8 +13,7 @@
  *
  * Return k after placing the final result in the first k slots of nums.
  *
- * Do not allocate extra space for another array.
- * You must do this by modifying the input array in-place with O(1) extra memory.
+ * Do not allocate extra space for another array. You must do this by modifying the input array in-place with O(1) extra memory.
  *
  * Example 1:
  * Input: nums = [1,1,2]
@@ -30,19 +29,20 @@
  * - nums is sorted in non-decreasing order.
  */
 
-/**
- * @param {number[]} nums
- * @return {number}
- */
-function removeDuplicates(nums) {
-  // Write your code here
-  if (nums.length === 0) return 0;
-  let left = 0;
-  for (let right = 0; right < nums.length; right++) {
-    if (nums[left] !== nums[right]) {
-      left++;
-      nums[left] = nums[right];
+class Solution {
+  /**
+   * @param {number[]} nums
+   * @return {number}
+   */
+  removeDuplicates(nums) {
+    // 2 2 10 10 30 30 30
+    let left = 0;
+    for (let right = 0; right < nums.length; right++) {
+      if (nums[left] !== nums[right]) {
+        left++;
+        nums[left] = nums[right];
+      }
     }
+    return left + 1;
   }
-  return left + 1;
 }
