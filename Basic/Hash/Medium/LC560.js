@@ -1,0 +1,43 @@
+/*
+560. Subarray Sum Equals K
+
+Given an array of integers nums and an integer k, 
+return the total number of continuous subarrays whose sum equals to k.
+
+Example 1:
+Input: nums = [1,1,1], k = 2
+Output: 2
+
+Example 2:
+Input: nums = [1,2,3], k = 3
+Output: 2
+
+Constraints:
+- 1 <= nums.length <= 2 * 10^4
+- -1000 <= nums[i] <= 1000
+- -10^7 <= k <= 10^7
+*/
+
+// Write your solution below:
+// * 前綴和 + HashMap
+class Solution {
+  /**
+   * @param {number[]} nums
+   * @param {number} k
+   * @return {number}
+   */
+  subarraySum(nums, k) {
+    let map = new Map();
+    map.set(0, 1);
+    let sum = 0;
+    let count = 0;
+    for (let n of nums) {
+      sum += n;
+      if (map.has(sum - k)) {
+        count += map.get(sum - k);
+      }
+      map.set(sum, (map.get(sum) || 0) + 1);
+    }
+    return count;
+  }
+}
