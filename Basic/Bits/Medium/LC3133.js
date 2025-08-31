@@ -1,33 +1,27 @@
-/**
- * * 3133. Minimum Array End
- *
- * You are given two integers n and x.
- *
- * You want to construct an array arr of length n such that:
- * - The bitwise AND of all elements in arr is equal to x.
- * - All elements in arr are non-negative integers.
- *
- * Find the minimum possible value of the last element in arr (i.e., arr[n - 1]) among all possible arrays that satisfy the above conditions.
- *
- * Example 1:
- * Input: n = 3, x = 4
- * Output: 6
- * Explanation: One possible array is [4, 0, 6]. The bitwise AND of all elements is 4, and the last element is 6.
- * * 0100
- * * 0011
- * *
- *
- * Example 2:
- * Input: n = 1, x = 7
- * Output: 7
- * Explanation: The only possible array is [7].
- *
- * Constraints:
- * - 1 <= n <= 10^9
- * - 0 <= x < 2^31
- */
+/*
+* LeetCode 3133. Minimum Array End
 
-// Write your solution here:
+Given two integers n and x, you are given an array a of length n where a[0] = x. For each i (1 <= i < n), you can choose any integer a[i] such that a[i] >= 0.
+
+You are allowed to choose the values of a[1], a[2], ..., a[n-1] in any way you like.
+
+Let S be the bitwise OR of all elements in the array a.
+
+Find the minimum possible value of a[n-1] such that S is minimized.
+
+Constraints:
+- 1 <= n <= 10^9
+- 0 <= x < 2^31
+
+Example 1:
+Input: n = 3, x = 5
+Output: 0
+
+Example 2:
+Input: n = 1, x = 7
+Output: 7
+*/
+
 class Solution {
   /**
    * @param {number} n
