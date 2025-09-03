@@ -1,5 +1,6 @@
 /**
  * * LeetCode 88. Merge Sorted Array
+ * * https://medium.com/@ChYuan/leetcode-no-88-merge-sorted-array-%E5%BF%83%E5%BE%97-easy-9d2b3141ded3 (ChingYuanYang)
  *
  * Given two sorted integer arrays nums1 and nums2, merge nums2 into nums1 as one sorted array.
  *
@@ -27,13 +28,28 @@ class Solution {
    * @param {number} n
    * @return {void} Do not return anything, modify nums1 in-place instead.
    */
+  // * 從大到小排序，也就是從 nums1 後面開始放起，最大數字開始放。
   merge(nums1, m, nums2, n) {
-    // nums1 = nums1.slice(0, m + n - 1);
-    let temp = 0;
-    for (let i = m; i <= n + m - 1; i++) {
-      nums1[i] = nums2[temp++];
+    let p1 = m - 1;
+    let p2 = n - 1;
+    let p = nums1.length - 1;
+
+    while (p1 >= 0 && p2 >= 0) {
+      if (nums1[p1] > nums2[p2]) {
+        nums1[p] = nums1[p1];
+        p1--;
+      } else {
+        nums1[p] = nums2[p2];
+        p2--;
+      }
+      p--;
     }
 
-    nums1.sort((a, b) => a - b);
+    // * 補 p2 沒放玩的樹
+    while (p2 >= 0) {
+      nums1[p] = nums2[p2];
+      p2--;
+      p--;
+    }
   }
 }
