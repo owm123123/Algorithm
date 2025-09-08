@@ -35,15 +35,14 @@ class Node {
   }
 }
 
+// 雙向鏈表 + HashMap
 /**
  * @param {number} capacity
  */
 var LRUCache = function (capacity) {
   this.capacity = capacity;
-  // * map: 紀錄是否存在
-  // * head / tail: 紀錄順序
-  this.map = new Map();
-  // dummy head & tail
+  this.map = new Map(); // * value 是 node
+  // * head (dummy) / tail (dummy) 真正的頭是 head.next，真正的尾是 tail.prev。
   this.head = new Node();
   this.tail = new Node();
   this.head.next = this.tail;
@@ -111,10 +110,3 @@ LRUCache.prototype.put = function (key, value) {
     this.map.set(key, node);
   }
 };
-
-/**
- * Your LRUCache object will be instantiated and called as such:
- * var obj = new LRUCache(capacity)
- * var param_1 = obj.get(key)
- * obj.put(key,value)
- */
