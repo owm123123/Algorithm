@@ -1,5 +1,5 @@
 /*
-427. Construct Quad Tree
+* 427. Construct Quad Tree
 
 Given a n x n matrix grid of 0's and 1's only. We want to represent grid with a Quad-Tree.
 
@@ -50,11 +50,20 @@ Constraints:
  */
 
 /*
-* 題意
+ * 題意
   1. 一開始看整個 grid，如果值都一樣，就直接建立葉節點。
   2. 如果有不同，就把這塊切成四個象限，對每個象限遞迴做同樣的判斷。
   3. 直到每個小區域都是全 0 或全 1，才建立葉節點。 
 */
+/*
+ * 參數說明
+ * isLeaf 的判斷
+    isLeaf = true：當前區域的所有格子都是相同值（全 0 或全 1）
+    isLeaf = false：當前區域有不同值，需要繼續分割成四個子區域
+ * val 的判斷
+    val = true：區域內全是 1
+    val = false：區域內全是 0
+ */
 class Solution {
   /**
    * @param {number[][]} grid
@@ -82,12 +91,10 @@ class Solution {
 
       let half = len >> 1;
       return new Node(
-        true,
-        false,
-        dfs(x, y, half),
+        true, // 非葉節點的 val 不重要
+        false, // isLeaf = false 表示需要繼續分割
         dfs(x, y, half),
         dfs(x, y + half, half),
-        dfs(x + half, y, half),
         dfs(x + half, y, half),
         dfs(x + half, y + half, half)
       );
