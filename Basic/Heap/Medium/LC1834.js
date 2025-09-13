@@ -47,43 +47,56 @@ Constraints:
  * @return {number[]}
  */
 var getOrder = function (tasks) {
+  // 邊界檢查：空陣列直接返回
   if (!tasks || !tasks.length) return [];
 
   const n = tasks.length;
 
+  // 步驟1：將任務轉換為物件並按開始時間排序
+  // 原始任務：[enqueueTime, processingTime] -> 物件：{startTime, duration, index}
   const sortedTasks = tasks
     .map((e, i) => ({
-      startTime: e[0],
-      duration: e[1],
-      index: i,
+      startTime: e[0], // 任務可開始執行的時間
+      duration: e[1], // 任務執行需要的時間
+      index: i, // 保留原始索引
     }))
-    .sort((a, b) => a.startTime - b.startTime);
+    .sort((a, b) => a.startTime - b.startTime); // 按開始時間排序
 
+  // 步驟2：建立優先佇列（Min Heap）
+  // 排序規則：1. 執行時間短的優先 2. 執行時間相同時索引小的優先
   const minQueue = new PriorityQueue((a, b) => {
     if (a.duration === b.duration) {
-      return a.index - b.index;
+      return a.index - b.index; // 執行時間相同，選索引較小的
     } else {
-      return a.duration - b.duration;
+      return a.duration - b.duration; // 選執行時間較短的
     }
   });
 
-  const result = [];
-  let cpuStartTime = 0;
-  let i = 0;
+  const result = []; // 存放執行順序的結果
+  let cpuStartTime = 0; // CPU 當前時間
+  let i = 0; // 指向下一個要檢查的任務
+
+  // 步驟3：主迴圈 - 模擬CPU執行過程
+  // 當佇列不為空或還有任務未處理時繼續執行
   while (!minQueue.isEmpty() || i < n) {
+    // 情況1：CPU空閒且沒有可執行任務
+    // 如果佇列為空且當前時間小於下一個任務的開始時間，跳到該任務的開始時間
     if (minQueue.isEmpty() && cpuStartTime < sortedTasks[i].startTime)
       cpuStartTime = sortedTasks[i].startTime;
 
+    // 情況2：將所有在當前時間可執行的任務加入佇列
+    // 遍歷所有開始時間 <= 當前CPU時間的任務
     while (i < n && cpuStartTime >= sortedTasks[i].startTime) {
-      minQueue.enqueue(sortedTasks[i]);
+      minQueue.enqueue(sortedTasks[i]); // 加入優先佇列
       i++;
     }
 
-    const nextTask = minQueue.dequeue();
+    // 情況3：從佇列中取出優先度最高的任務執行
+    const nextTask = minQueue.dequeue(); // 取出執行時間最短的任務
 
-    cpuStartTime += nextTask.duration;
-    result.push(nextTask.index);
+    cpuStartTime += nextTask.duration; // 更新CPU時間（當前時間 + 任務執行時間）
+    result.push(nextTask.index); // 記錄執行順序（使用原始索引）
   }
 
-  return result;
+  return result; // 返回任務執行順序
 };
