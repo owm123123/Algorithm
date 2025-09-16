@@ -39,10 +39,14 @@ var permuteUnique = function (nums) {
       if (used[i]) continue;
 
       // * 去重：如果當前元素等於前一個元素，且前一個元素未被使用，則跳過
-      if (i !== 0 && nums[i] === nums[i - 1] && used[i] === true) continue;
+      // 這樣確保相同元素按照索引順序使用，避免重複排列
+      if (i !== 0 && nums[i] === nums[i - 1] && used[i - 1] === false) continue;
+
       used[i] = true;
       sub.push(nums[i]);
+
       backTrack(sub);
+
       used[i] = false;
       sub.pop();
     }

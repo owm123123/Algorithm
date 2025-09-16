@@ -18,7 +18,27 @@
  * - s contains only lowercase English letters.
  */
 
-// Write your solution here:
+/*
+* 執行樹狀圖
+backTrack(0, [])
+├── end=0: "a" ✅
+│   └── backTrack(1, ["a"])
+│       ├── end=1: "a" ✅
+│       │   └── backTrack(2, ["a","a"])
+│       │       └── end=2: "b" ✅
+│       │           └── backTrack(3, ["a","a","b"])
+│       │               └── 🎉 找到解: ["a","a","b"]
+│       └── end=2: "ab" ❌
+│
+├── end=1: "aa" ✅
+│   └── backTrack(2, ["aa"])
+│       └── end=2: "b" ✅
+│           └── backTrack(3, ["aa","b"])
+│               └── 🎉 找到解: ["aa","b"]
+│
+└── end=2: "aab" ❌  
+*/
+
 class Solution {
   /**
    * @param {string} s
@@ -37,17 +57,17 @@ class Solution {
       return true;
     };
 
-    let backTrack = (start, []) => {
+    let backTrack = (start, sub) => {
       if (start === len) {
-        res.push([...path]);
+        res.push([...sub]);
         return;
       }
 
       for (let end = start; end < len; end++) {
         if (isPalindrome(s, start, end)) {
-          path.push(s.substring(start, end + 1));
-          backTrack(end + 1, path);
-          path.pop();
+          sub.push(s.substring(start, end + 1));
+          backTrack(end + 1, sub);
+          sub.pop();
         }
       }
     };
