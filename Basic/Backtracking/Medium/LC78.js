@@ -26,13 +26,13 @@ All the numbers of nums are unique.
 var subsets = function (nums) {
   let res = [];
 
-  let backTrack = (idx, path) => {
-    res.push([...path]);
+  let backTrack = (start, sub) => {
+    res.push([...sub]);
 
-    for (let i = idx; i < nums.length; i++) {
-      path.push(nums[i]);
-      backTrack(i + 1, path);
-      path.pop();
+    for (let i = start; i < nums.length; i++) {
+      sub.push(nums[i]);
+      backTrack(i + 1, sub);
+      sub.pop();
     }
   };
 
