@@ -1,5 +1,5 @@
 /*
-997. Find the Town Judge
+* 997. Find the Town Judge
 
 In a town, there are n people labeled from 1 to n. There is a rumor that one of these people is secretly the town judge.
 
@@ -35,29 +35,10 @@ Constraints:
 - 0 <= trust.length <= 10^4
 - trust[i].length == 2
 - All the trust relationships are unique.
-
---------------------
-Write your function below:
-
 */
-
-[
-  [0, 0, 0],
-  [0, 0, 0],
-  [0, 1, 0],
-];
-
-Input: obstacleGrid = [
-  [0, 0, 0],
-  [0, 0, 1],
-  [0, 1, 0],
-];
-
-Output: 0;
 
 // * graphs (incoming & outgoing)
 function findJudge(n, trust) {
-  // Your code here
   // * incoming:  被信任次數 (入度)
   let incoming = new Array(n + 1).fill(0);
   // * outgoing: 信任別人次數 (出度)

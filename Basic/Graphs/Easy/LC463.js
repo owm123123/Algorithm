@@ -1,5 +1,5 @@
 /*
-463. Island Perimeter
+* 463. Island Perimeter
 
 You are given a 2D grid map of '1's (land) and '0's (water). 
 Grid cells are connected horizontally/vertically (not diagonally). 
@@ -22,14 +22,39 @@ Output: 16
 Constraints:
 - 1 <= grid.length, grid[i].length <= 100
 - grid[i][j] is 0 or 1.
-
---------------------------
-Write your code below:
 */
 
-// * DFS
+/*
+ * 圖解
+[1][1]
+[1][0]
+格子(0,0): 4條邊
+格子(0,1): 4條邊 - 2(與左鄰共享) = 2條邊  
+格子(1,0): 4條邊 - 2(與上鄰共享) = 2條邊
+總周長: 4 + 2 + 2 = 8 
+ */
+
+// * Best
 function islandPerimeter(grid) {
-  // TODO: Implement this function
+  let rows = grid.length;
+  let cols = grid[0].length;
+  let res = 0;
+
+  for (let r = 0; r < rows; r++) {
+    for (let c = 0; c < cols; c++) {
+      if (grid[r][c] === 1) {
+        res += 4;
+
+        if (r > 0 && grid[r - 1][c] === 1) res -= 2;
+        if (c > 0 && grid[r][c - 1] === 1) res -= 2;
+      }
+    }
+  }
+  return res;
+}
+
+// * DFS (bed)
+function islandPerimeter(grid) {
   let rows = grid.length;
   let cols = grid[0].length;
 
