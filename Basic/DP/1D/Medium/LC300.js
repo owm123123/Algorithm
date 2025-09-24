@@ -20,37 +20,27 @@ Output: 1
 Constraints:
 - 1 <= nums.length <= 2500
 - -10^4 <= nums[i] <= 10^4
-
-// Write your solution below:
 */
 
-class Solution {
-  /**
-   * @param {number[]} nums
-   * @return {number}
-   */
-  lengthOfLIS(nums) {
-    let res = [];
-    for (let n of nums) {
-      // * 二分搜尋 res 中第一個 >= x 的位置
-      let left = 0;
-      let right = res.length;
-      while (left < right) {
-        let mid = Math.floor(left + (right - left) / 2);
-        if (res[mid] < n) {
-          left = mid + 1;
-        } else {
-          right = mid;
-        }
-      }
-      // * left === q.length (n 是 res 裡面最大的數)
-      // * 如果不是則替換掉
-      if (left === res.length) {
-        res.push(n);
-      } else {
-        res[left] = n;
+/**
+ * @param {number[]} nums
+ * @return {number}
+ */
+var lengthOfLIS = function (nums) {
+  if (nums.length === 0) return 0;
+  // dp: 以 nums[i] 結尾的最長遞增子序列長度
+  let dp = new Array(nums.length).fill(1);
+  let maxLen = 1;
+
+  // 對於每個位置 i，找出所有在它之前且值比它小的元素，然後選擇其中 LIS 長度最大的來延伸。
+  for (let i = 1; i < nums.length; i++) {
+    for (let j = i - 1; j >= 0; j--) {
+      if (nums[i] > nums[j]) {
+        dp[i] = Math.max(dp[i], dp[j] + 1);
       }
     }
-    return res.length;
+    maxLen = Math.max(maxLen, dp[i]);
   }
-}
+
+  return maxLen;
+};

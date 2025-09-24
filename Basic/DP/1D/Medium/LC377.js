@@ -30,7 +30,6 @@ Constraints:
 - All the elements of nums are unique.
 - 1 <= target <= 1000
 
-// Write your solution below:
 */
 
 class Solution {
@@ -40,8 +39,10 @@ class Solution {
    * @return {number}
    */
   combinationSum4(nums, target) {
+    // dp[i]：湊出和為 i 的所有可能排列的數量
     let dp = new Array(target + 1).fill(0);
     dp[0] = 1; // 空集合
+
     for (let i = 1; 1 <= target; i++) {
       for (let n of nums) {
         if (i >= n) {
@@ -49,6 +50,7 @@ class Solution {
         }
       }
     }
+
     return dp[target];
   }
 }
