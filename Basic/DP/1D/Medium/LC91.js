@@ -36,13 +36,15 @@
  * @return {number}
  */
 var numDecodings = function (s) {
-  // TODO: Implement your solution here
   // initial
   let n = s.length;
   // ! 因為下面有用到 i - 2 的關係 所以 dp[0] 需要設定空字串
+  // * DP 定義: 字符串 s 的前 i 個字符的解碼方案數量
   let dp = new Array(n + 1).fill(0);
-  dp[0] = 1;
-  dp[1] = s[0] === '0' ? 0 : 1;
+
+  // 邊界情況
+  dp[0] = 1; // 空字符串基礎情況
+  dp[1] = s[0] === '0' ? 0 : 1; // 第一個字符如果是 '0' 無法解碼
 
   // "12"
   for (let i = 2; i < n + 1; i++) {
