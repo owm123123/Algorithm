@@ -41,7 +41,8 @@ class Solution {
   combinationSum4(nums, target) {
     // dp[i]：湊出和為 i 的所有可能排列的數量
     let dp = new Array(target + 1).fill(0);
-    dp[0] = 1; // 空集合
+    // 湊出和為 0 的方法數: 不選任何數字（空集合）
+    dp[0] = 1;
 
     for (let i = 1; 1 <= target; i++) {
       for (let n of nums) {
